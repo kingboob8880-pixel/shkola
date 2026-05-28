@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Школа Лекаря Абу Мухаммад</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5EFE6;
+    --bg-soft: #EFE7D8;
+    --ink: #1F1612;
+    --ink-soft: #4A3F37;
+    --primary: #0A3D2E;
+    --primary-light: #1A5C46;
+    --gold: #B8924A;
+    --gold-soft: #D4B373;
+    --line: #D9CFBE;
+    --shadow: rgba(31, 22, 18, 0.08);
+    --shadow-deep: rgba(31, 22, 18, 0.18);
+    --font-size-base: 18px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    font-size: var(--font-size-base);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+    overflow-x: hidden;
+    transition: font-size 0.3s ease;
+  }
+
+  /* Decorative animated gradient background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(184, 146, 74, 0.12) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(10, 61, 46, 0.10) 0%, transparent 45%),
+      radial-gradient(circle at 50% 50%, rgba(212, 179, 115, 0.08) 0%, transparent 35%);
+    animation: bgFloat 25s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  @keyframes bgFloat {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(2%, -2%) rotate(2deg); }
+    100% { transform: translate(-2%, 2%) rotate(-2deg); }
+  }
+
+  /* ===== HEADER ===== */
+  .top-bar {
+    position: sticky;
+    top: 0;
+    background: rgba(245, 239, 230, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    z-index: 100;
+    padding: 14px 24px;
+  }
+
+  .top-bar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .brand-mini {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--primary);
+    letter-spacing: 0.02em;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ctrl-group {
+    display: flex;
+    align-items: center;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px;
+    gap: 2px;
+  }
+
+  .ctrl-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+    color: var(--ink-soft);
+    padding: 6px 12px;
+    border-radius: 999px;
+    transition: all 0.25s ease;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    min-width: 36px;
+  }
+
+  .ctrl-btn:hover {
+    color: var(--primary);
+    background: rgba(10, 61, 46, 0.06);
+  }
+
+  .ctrl-btn.active {
+    background: var(--primary);
+    color: var(--bg);
+  }
+
+  .font-btn {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+  }
+
+  .font-btn.small { font-size: 12px; }
+  .font-btn.large { font-size: 16px; }
+
+  /* ===== HERO ===== */
+  .hero {
+    padding: 80px 24px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bismillah {
+    font-family: 'Amiri', serif;
+    font-size: 1.8em;
+    color: var(--primary);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4em, 6vw, 4em);
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.4s forwards;
+  }
+
+  .hero-title .accent {
+    font-style: italic;
+    color: var(--primary);
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero-title .accent::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: lineExpand 1.2s ease 1.2s forwards;
+  }
+
+  @keyframes lineExpand {
+    to { transform: scaleX(1); }
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4em;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.6s forwards;
+  }
+
+  .hero-divider {
+    width: 80px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto;
+    position: relative;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+  }
+
+  .hero-divider::before,
+  .hero-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+  .hero-divider::before { left: -16px; }
+  .hero-divider::after { right: -16px; }
+
+  .hero-intro {
+    max-width: 680px;
+    margin: 48px auto 0;
+    font-size: 1.05em;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 1s ease 1s forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== LIBRARY GRID ===== */
+  .library {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 24px 100px;
+  }
+
+  .section-label {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .section-label-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: inline-block;
+    padding: 0 24px;
+    position: relative;
+  }
+
+  .section-label-text::before,
+  .section-label-text::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 60px;
+    height: 1px;
+    background: var(--line);
+  }
+  .section-label-text::before { right: 100%; }
+  .section-label-text::after { left: 100%; }
+
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+  }
+
+  .book-card {
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 36px 28px 32px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
+  }
+
+  .book-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--gold), var(--primary));
+    background-size: 200% 100%;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+    animation: gradientShift 4s linear infinite;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  .book-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px var(--shadow-deep);
+    border-color: var(--gold-soft);
+  }
+
+  .book-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .book-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85em;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .book-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6em;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 16px;
+    transition: color 0.3s ease;
+  }
+
+  .book-card:hover .book-title {
+    color: var(--primary);
+  }
+
+  .book-desc {
+    font-size: 0.92em;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    margin-bottom: 24px;
+    flex-grow: 1;
+  }
+
+  .book-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+
+  .book-chapters {
+    font-size: 0.85em;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .book-arrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1em;
+    color: var(--primary);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    transition: transform 0.3s ease;
+  }
+
+  .book-card:hover .book-arrow {
+    transform: translateX(6px);
+  }
+
+  /* ===== ABOUT SECTION ===== */
+  .about {
+    background: var(--primary);
+    color: var(--bg);
+    padding: 80px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(184, 146, 74, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 70% 80%, rgba(212, 179, 115, 0.1) 0%, transparent 50%);
+    animation: aboutGlow 12s ease-in-out infinite alternate;
+  }
+
+  @keyframes aboutGlow {
+    0% { opacity: 0.6; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.05); }
+  }
+
+  .about-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .about-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    margin-bottom: 24px;
+  }
+
+  .about-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8em, 4vw, 2.6em);
+    font-weight: 400;
+    line-height: 1.3;
+    margin-bottom: 32px;
+  }
+
+  .about-text {
+    font-size: 1.05em;
+    line-height: 1.8;
+    color: rgba(245, 239, 230, 0.85);
+    margin-bottom: 24px;
+  }
+
+  .about-text:last-child { margin-bottom: 0; }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    padding: 48px 24px 32px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+  }
+
+  .footer-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 0.95em;
+    margin-bottom: 16px;
+  }
+
+  .footer-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 1.3em;
+    color: var(--primary);
+  }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(31, 22, 18, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal {
+    background: var(--bg);
+    border-radius: 6px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 85vh;
+    overflow: hidden;
+    position: relative;
+    transform: scale(0.85) translateY(40px);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+  }
+
+  .modal-overlay.active .modal {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+
+  .modal-gradient {
+    height: 6px;
+    background: linear-gradient(90deg,
+      var(--primary) 0%,
+      var(--gold) 25%,
+      var(--primary-light) 50%,
+      var(--gold-soft) 75%,
+      var(--primary) 100%);
+    background-size: 300% 100%;
+    animation: modalGradient 4s linear infinite;
+  }
+
+  @keyframes modalGradient {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8em;
+    color: var(--ink-soft);
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.3s ease, transform 0.3s ease;
+    z-index: 2;
+  }
+
+  .modal-close:hover {
+    color: var(--primary);
+    transform: rotate(90deg);
+  }
+
+  .modal-content {
+    padding: 48px 40px 40px;
+    overflow-y: auto;
+    max-height: calc(85vh - 6px);
+  }
+
+  .modal-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85em;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: modalFadeIn 0.6s ease 0.3s forwards;
+  }
+
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9em;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: modalFadeIn 0.6s ease 0.4s forwards;
+  }
+
+  .modal-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: modalFadeIn 0.6s ease 0.5s forwards;
+  }
+
+  .modal-desc {
+    font-size: 1em;
+    color: var(--ink-soft);
+    line-height: 1.75;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: modalFadeIn 0.6s ease 0.6s forwards;
+  }
+
+  .modal-list {
+    margin: 20px 0 28px;
+    padding-left: 0;
+    list-style: none;
+    opacity: 0;
+    animation: modalFadeIn 0.6s ease 0.7s forwards;
+  }
+
+  .modal-list li {
+    padding: 10px 0 10px 24px;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    font-size: 0.95em;
+  }
+
+  .modal-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .modal-list li:last-child { border-bottom: none; }
+
+  @keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .modal-button {
+    display: inline-block;
+    background: var(--primary);
+    color: var(--bg);
+    padding: 14px 36px;
+    border: none;
+    border-radius: 2px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05em;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: modalFadeIn 0.6s ease 0.8s forwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .modal-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(184, 146, 74, 0.4), transparent);
+    transition: left 0.6s ease;
+  }
+
+  .modal-button:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(10, 61, 46, 0.3);
+  }
+
+  .modal-button:hover::before {
+    left: 100%;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .top-bar { padding: 12px 16px; }
+    .brand-mini { font-size: 0.95em; }
+    .ctrl-btn { padding: 5px 10px; font-size: 12px; min-width: 32px; }
+
+    .hero { padding: 50px 20px 40px; }
+    .hero-bismillah { font-size: 1.5em; margin-bottom: 24px; }
+    .hero-subtitle { font-size: 1.15em; margin-bottom: 28px; }
+    .hero-intro { font-size: 0.98em; margin-top: 36px; }
+
+    .library { padding: 60px 16px 70px; }
+    .section-label-text { font-size: 0.85em; letter-spacing: 0.3em; padding: 0 16px; }
+    .section-label-text::before,
+    .section-label-text::after { width: 30px; }
+    .books-grid { gap: 20px; }
+    .book-card { padding: 28px 22px 24px; min-height: 280px; }
+    .book-title { font-size: 1.35em; }
+
+    .about { padding: 60px 20px; }
+    .about-text { font-size: 0.98em; }
+
+    .modal { max-height: 90vh; }
+    .modal-content { padding: 36px 24px 28px; max-height: calc(90vh - 6px); }
+    .modal-title { font-size: 1.5em; }
+    .modal-close { top: 14px; right: 18px; font-size: 1.6em; }
+  }
+
+  @media (max-width: 480px) {
+    .top-bar-inner { gap: 10px; }
+    .controls { gap: 6px; }
+    .ctrl-group { padding: 3px; }
+    .ctrl-btn { padding: 5px 9px; font-size: 11px; min-width: 30px; }
+    .brand-mini { font-size: 0.85em; }
+  }
+
+  /* Selection */
+  ::selection {
+    background: var(--gold);
+    color: var(--bg);
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <div class="brand-mini" data-ru="Школа Лекаря Абу Мухаммад" data-uz="Abu Muhammad Tabib Maktabi">
+      Школа Лекаря Абу Мухаммад
+    </div>
+    <div class="controls">
+      <div class="ctrl-group" role="group">
+        <button class="ctrl-btn active" data-lang="ru">RU</button>
+        <button class="ctrl-btn" data-lang="uz">UZ</button>
+      </div>
+      <div class="ctrl-group" role="group">
+        <button class="ctrl-btn font-btn small" data-font="dec" aria-label="Уменьшить шрифт">А</button>
+        <button class="ctrl-btn font-btn large" data-font="inc" aria-label="Увеличить шрифт">А</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bismillah">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ</div>
+  <h1 class="hero-title">
+    <span data-ru="Школа Лекаря" data-uz="Tabib Maktabi">Школа Лекаря</span>
+    <br>
+    <span class="accent" data-ru="Абу Мухаммад" data-uz="Abu Muhammad">Абу Мухаммад</span>
+  </h1>
+  <div class="hero-subtitle" data-ru="Библиотека учебников по рукье" data-uz="Ruqya bo'yicha darsliklar kutubxonasi">
+    Библиотека учебников по рукье
+  </div>
+  <div class="hero-divider"></div>
+  <p class="hero-intro" data-ru="Систематизированное знание о духовном целительстве, основанное на Книге Аллаха и Сунне Его Посланника ﷺ. Практическое руководство для лекарей и пациентов." data-uz="Allohning Kitobi va Uning Rasuli ﷺ Sunnatiga asoslangan ruhiy davolash haqida tizimlashtirilgan bilim. Tabiblar va bemorlar uchun amaliy qo'llanma.">
+    Систематизированное знание о духовном целительстве, основанное на Книге Аллаха и Сунне Его Посланника ﷺ. Практическое руководство для лекарей и пациентов.
+  </p>
+</section>
+
+<!-- LIBRARY -->
+<section class="library">
+  <div class="section-label">
+    <span class="section-label-text" data-ru="Учебники" data-uz="Darsliklar">Учебники</span>
+  </div>
+
+  <div class="books-grid">
+
+    <article class="book-card" data-book="1">
+      <div class="book-number" data-ru="Книга I" data-uz="Birinchi kitob">Книга I</div>
+      <h3 class="book-title" data-ru="Уничтожение и сжигание джиннов и духовных сущностей" data-uz="Jinlar va ruhiy mavjudotlarni yo'q qilish va kuydirish">
+        Уничтожение и сжигание джиннов и духовных сущностей
+      </h3>
+      <p class="book-desc" data-ru="Полное руководство по борьбе с тринадцатью типами джиннов: от обычных до ифритов. Протоколы уничтожения с конкретными аятами и мольбами." data-uz="O'n uchta jin turi bilan kurashish bo'yicha to'liq qo'llanma: oddiy jinlardan tortib ifritlargacha. Aniq oyatlar va duolar bilan yo'q qilish tartiblari.">
+        Полное руководство по борьбе с тринадцатью типами джиннов: от обычных до ифритов. Протоколы уничтожения с конкретными аятами и мольбами.
+      </p>
+      <div class="book-meta">
+        <span class="book-chapters" data-ru="16 глав" data-uz="16 bob">16 глав</span>
+        <span class="book-arrow" data-ru="Открыть" data-uz="Ochish">Открыть</span>
+      </div>
+    </article>
+
+    <article class="book-card" data-book="2">
+      <div class="book-number" data-ru="Книга II" data-uz="Ikkinchi kitob">Книга II</div>
+      <h3 class="book-title" data-ru="Названия органов тела для практикующего раки" data-uz="Amaliyotchi ruqya o'qiyuvchi uchun tana a'zolari nomlari">
+        Названия органов тела для практикующего раки
+      </h3>
+      <p class="book-desc" data-ru="Справочник арабских названий органов с формулами заклинания на себя, на пациента-мужчину и пациентку-женщину. Сорок три органа от стоп до волос." data-uz="A'zolarning arabcha nomlari bo'yicha qo'llanma, o'ziga, erkak va ayol bemorga duo o'qish shakllari bilan. Oyoqdan sochgacha qirq uch a'zo.">
+        Справочник арабских названий органов с формулами заклинания на себя, на пациента-мужчину и пациентку-женщину. Сорок три органа от стоп до волос.
+      </p>
+      <div class="book-meta">
+        <span class="book-chapters" data-ru="10 разделов" data-uz="10 bo'lim">10 разделов</span>
+        <span class="book-arrow" data-ru="Открыть" data-uz="Ochish">Открыть</span>
+      </div>
+    </article>
+
+    <article class="book-card" data-book="3">
+      <div class="book-number" data-ru="Книга III" data-uz="Uchinchi kitob">Книга III</div>
+      <h3 class="book-title" data-ru="Чтение заклинаний на органы по видам колдовства" data-uz="Sehr turlariga ko'ra a'zolarga duo o'qish">
+        Чтение заклинаний на органы по видам колдовства
+      </h3>
+      <p class="book-desc" data-ru="Метод трёхуровневого заклинания. Точное направление силы Корана на поражённые органы при каждом виде колдовства — от наступленного до приворота." data-uz="Uch darajali duo usuli. Har bir sehr turida — bosilgandan tortib oshiq qiluvchi sehrgacha — zararlangan a'zolarga Qur'on kuchini aniq yo'naltirish.">
+        Метод трёхуровневого заклинания. Точное направление силы Корана на поражённые органы при каждом виде колдовства — от наступленного до приворота.
+      </p>
+      <div class="book-meta">
+        <span class="book-chapters" data-ru="12 глав" data-uz="12 bob">12 глав</span>
+        <span class="book-arrow" data-ru="Открыть" data-uz="Ochish">Открыть</span>
+      </div>
+    </article>
+
+    <article class="book-card" data-book="4">
+      <div class="book-number" data-ru="Книга IV" data-uz="To'rtinchi kitob">Книга IV</div>
+      <h3 class="book-title" data-ru="Установка духовной защиты на тело" data-uz="Tanaga ruhiy himoya o'rnatish">
+        Установка духовной защиты на тело
+      </h3>
+      <p class="book-desc" data-ru="Как запечатать исцеление и не дать врагу вернуться. Полная методика возведения крепости (хисн) после рукьи — орган за органом." data-uz="Davolanishni muhrlash va dushmanning qaytishiga yo'l qo'ymaslik. Ruqyadan keyin qal'a (hisn) qurish bo'yicha to'liq metodika — a'zo-a'zo.">
+        Как запечатать исцеление и не дать врагу вернуться. Полная методика возведения крепости (хисн) после рукьи — орган за органом.
+      </p>
+      <div class="book-meta">
+        <span class="book-chapters" data-ru="16 глав" data-uz="16 bob">16 глав</span>
+        <span class="book-arrow" data-ru="Открыть" data-uz="Ochish">Открыть</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-inner">
+    <div class="about-label" data-ru="О школе" data-uz="Maktab haqida">О школе</div>
+    <h2 class="about-title" data-ru="Знание, проверенное практикой" data-uz="Amaliyotda sinalgan bilim">
+      Знание, проверенное практикой
+    </h2>
+    <p class="about-text" data-ru="Эта школа объединяет лекарей, изучающих и применяющих рукью на основе Корана и Сунны. Здесь нет теории ради теории — каждая строка проверена реальными сеансами, у изголовий больных, в моменты борьбы за исцеление." data-uz="Bu maktab Qur'on va Sunnatga asoslangan ruqyani o'rganuvchi va qo'llovchi tabiblarni birlashtiradi. Bu yerda nazariya uchun nazariya yo'q — har bir satr haqiqiy seanslarda, bemorlarning yostig'i yonida, shifo uchun kurashish daqiqalarida sinab ko'rilgan.">
+      Эта школа объединяет лекарей, изучающих и применяющих рукью на основе Корана и Сунны. Здесь нет теории ради теории — каждая строка проверена реальными сеансами, у изголовий больных, в моменты борьбы за исцеление.
+    </p>
+    <p class="about-text" data-ru="Наша цель — сделать знание о духовном целительстве доступным и систематизированным, чтобы каждый мусульманин мог защитить себя и помочь ближнему словом Аллаха." data-uz="Bizning maqsadimiz — har bir musulmon o'zini himoya qila olishi va Allohning so'zi bilan yaqiniga yordam berishi uchun ruhiy davolash haqidagi bilimni ochiq va tizimlashtirilgan qilishdir.">
+      Наша цель — сделать знание о духовном целительстве доступным и систематизированным, чтобы каждый мусульманин мог защитить себя и помочь ближнему словом Аллаха.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-text" data-ru="А Аллах знает лучше" data-uz="Va Alloh yaxshiroq biladi">А Аллах знает лучше</div>
+  <div class="footer-arabic">وَاللَّهُ أَعْلَمُ</div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-gradient"></div>
+    <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
+    <div class="modal-content" id="modalContent">
+      <!-- Заполняется JS -->
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== ДАННЫЕ КНИГ ДЛЯ МОДАЛОК =====
+  const booksData = {
+    1: {
+      label: { ru: 'Книга I', uz: 'Birinchi kitob' },
+      title: {
+        ru: 'Уничтожение и сжигание джиннов и духовных сущностей',
+        uz: 'Jinlar va ruhiy mavjudotlarni yo\'q qilish va kuydirish'
+      },
+      desc: {
+        ru: 'Это полное практическое руководство для лекаря-воина. В книге детально разобраны тринадцать типов духовных сущностей, каждая со своими особенностями и слабостями.',
+        uz: 'Bu tabib-jangchi uchun to\'liq amaliy qo\'llanma. Kitobda o\'n uchta ruhiy mavjudot turi, ularning xususiyatlari va zaif tomonlari batafsil tahlil qilingan.'
+      },
+      contents: {
+        ru: ['Введение и основа дозволенности', 'Классификация 13 типов сущностей', 'Механизм уничтожения через Коран', 'Протоколы против каждого типа', 'Десять правил раки-воина', 'Признаки уничтожения и проверка'],
+        uz: ['Kirish va ruxsat etilganlik asosi', '13 turdagi mavjudotlarning tasnifi', 'Qur\'on orqali yo\'q qilish mexanizmi', 'Har bir turga qarshi tartiblar', 'Ruqya-jangchi uchun o\'nta qoida', 'Yo\'q qilish belgilari va tekshirish']
+      },
+      button: { ru: 'Читать книгу', uz: 'Kitobni o\'qish' }
+    },
+    2: {
+      label: { ru: 'Книга II', uz: 'Ikkinchi kitob' },
+      title: {
+        ru: 'Названия органов тела для практикующего раки',
+        uz: 'Amaliyotchi ruqya o\'qiyuvchi uchun tana a\'zolari nomlari'
+      },
+      desc: {
+        ru: 'Сорок три органа от стоп до волос с формулами заклинания на себя, на пациента-мужчину и пациентку-женщину. Арабский текст, транскрипция и перевод.',
+        uz: 'Oyoqdan sochgacha qirq uch a\'zo, o\'ziga, erkak va ayol bemorga duo o\'qish shakllari bilan. Arabcha matn, transkripsiya va tarjima.'
+      },
+      contents: {
+        ru: ['Грамматика притяжательных форм', 'Нижние конечности — 5 органов', 'Туловище — 4 органа', 'Верхние конечности — 7 органов', 'Голова и шея — 4 органа', 'Лицо — 10 органов', 'Внутренние органы — 12 органов'],
+        uz: ['Egalik shakllarining grammatikasi', 'Pastki a\'zolar — 5 a\'zo', 'Tanaviy — 4 a\'zo', 'Yuqori a\'zolar — 7 a\'zo', 'Bosh va bo\'yin — 4 a\'zo', 'Yuz — 10 a\'zo', 'Ichki a\'zolar — 12 a\'zo']
+      },
+      button: { ru: 'Читать книгу', uz: 'Kitobni o\'qish' }
+    },
+    3: {
+      label: { ru: 'Книга III', uz: 'Uchinchi kitob' },
+      title: {
+        ru: 'Чтение заклинаний на органы по видам колдовства',
+        uz: 'Sehr turlariga ko\'ra a\'zolarga duo o\'qish'
+      },
+      desc: {
+        ru: 'Ядро книги — метод трёхуровневого заклинания. От общего к специфическому, от специфического к точному поражённому органу. Подобно прицелу, который сужается до самого центра мишени.',
+        uz: 'Kitobning yadrosi — uch darajali duo usuli. Umumiydan maxsusga, maxsusdan aniq zararlangan a\'zoga. Nishonning markazigacha torayib boruvchi nishongohga o\'xshash.'
+      },
+      contents: {
+        ru: ['Метод трёхуровневого заклинания', 'Чтение в намерениях (фи аль-кальб)', 'Колдовство наступленное', 'Колдовство съеденное', 'Колдовство на разлуку', 'Колдовство-приворот', 'Колдовство на помешательство', 'Колдовство на бесплодие', 'Сглаз и прикосновение джинна'],
+        uz: ['Uch darajali duo usuli', 'Niyatda o\'qish (fi al-qalb)', 'Bosilgan sehr', 'Yeyilgan sehr', 'Ajralish sehri', 'Oshiq qiluvchi sehr', 'Aqldan ozish sehri', 'Bepushtlik sehri', 'Ko\'z tegishi va jin tegishi']
+      },
+      button: { ru: 'Читать книгу', uz: 'Kitobni o\'qish' }
+    },
+    4: {
+      label: { ru: 'Книга IV', uz: 'To\'rtinchi kitob' },
+      title: {
+        ru: 'Установка духовной защиты на тело',
+        uz: 'Tanaga ruhiy himoya o\'rnatish'
+      },
+      desc: {
+        ru: 'Разрушить колдовство — только половина работы. Без защиты враг возвращается. В этой книге собраны методы возведения крепости (хисн) орган за органом, после каждого вида лечения.',
+        uz: 'Sehrni vayron qilish — ishning faqat yarmi. Himoyasiz dushman qaytadi. Bu kitobda har bir davolash turidan keyin a\'zo-a\'zo qal\'a (hisn) qurish usullari to\'plangan.'
+      },
+      contents: {
+        ru: ['Разница между атакой и защитой', 'Трёхуровневая защита — метод', 'Аяты защиты — подбор', 'Защита после маршуш', 'Защита после ма\'куль', 'Защита после тафрик', 'Защита после джунун', 'Защита от сглаза и масс', 'Защита дома и пространства', '7-дневный план защиты'],
+        uz: ['Hujum va himoya o\'rtasidagi farq', 'Uch darajali himoya — usul', 'Himoya oyatlari — tanlash', 'Marshushdan keyin himoya', 'Ma\'kuldan keyin himoya', 'Tafriqdan keyin himoya', 'Jununan keyin himoya', 'Ko\'z va mass\'dan himoya', 'Uy va makonni himoya qilish', '7 kunlik himoya rejasi']
+      },
+      button: { ru: 'Читать книгу', uz: 'Kitobni o\'qish' }
+    }
+  };
+
+  // ===== ПЕРЕКЛЮЧЕНИЕ ЯЗЫКА =====
+  let currentLang = 'ru';
+
+  function switchLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+
+    // Обновляем все элементы с data-ru/data-uz
+    document.querySelectorAll('[data-ru]').forEach(el => {
+      const text = el.getAttribute(`data-${lang}`);
+      if (text) el.textContent = text;
+    });
+
+    // Обновляем активную кнопку
+    document.querySelectorAll('[data-lang]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+
+    // Если открыта модалка — обновить её
+    const modal = document.getElementById('modalOverlay');
+    if (modal.classList.contains('active')) {
+      const bookId = modal.dataset.currentBook;
+      if (bookId) renderModal(bookId);
+    }
+  }
+
+  document.querySelectorAll('[data-lang]').forEach(btn => {
+    btn.addEventListener('click', () => switchLang(btn.dataset.lang));
+  });
+
+  // ===== ИЗМЕНЕНИЕ РАЗМЕРА ШРИФТА =====
+  let fontSize = 18;
+  const minSize = 14;
+  const maxSize = 24;
+
+  function updateFontSize(delta) {
+    fontSize = Math.max(minSize, Math.min(maxSize, fontSize + delta));
+    document.documentElement.style.setProperty('--font-size-base', `${fontSize}px`);
+  }
+
+  document.querySelector('[data-font="dec"]').addEventListener('click', () => updateFontSize(-1));
+  document.querySelector('[data-font="inc"]').addEventListener('click', () => updateFontSize(1));
+
+  // ===== МОДАЛЬНОЕ ОКНО =====
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalContent = document.getElementById('modalContent');
+  const modalClose = document.getElementById('modalClose');
+
+  function renderModal(bookId) {
+    const book = booksData[bookId];
+    if (!book) return;
+
+    const lang = currentLang;
+
+    const contentsHTML = book.contents[lang].map(item => `<li>${item}</li>`).join('');
+
+    modalContent.innerHTML = `
+      <div class="modal-label">${book.label[lang]}</div>
+      <h2 class="modal-title">${book.title[lang]}</h2>
+      <div class="modal-divider"></div>
+      <p class="modal-desc">${book.desc[lang]}</p>
+      <ul class="modal-list">${contentsHTML}</ul>
+      <a href="books/${bookId}.html" class="modal-button">${book.button[lang]}</a>
+    `;
+
+    modalOverlay.dataset.currentBook = bookId;
+  }
+
+  function openModal(bookId) {
+    renderModal(bookId);
+    modalOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modalOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    delete modalOverlay.dataset.currentBook;
+  }
+
+  document.querySelectorAll('.book-card').forEach(card => {
+    card.addEventListener('click', () => openModal(card.dataset.book));
+  });
+
+  modalClose.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) closeModal();
+  });
+
+  // Esc для закрытия
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal();
+  });
+
+  // ===== ПОЯВЛЕНИЕ КАРТОЧЕК ПРИ СКРОЛЛЕ =====
+  const cards = document.querySelectorAll('.book-card');
+  cards.forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = `opacity 0.6s ease ${i * 0.1}s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.1}s, box-shadow 0.4s ease, border-color 0.4s ease`;
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  cards.forEach(card => observer.observe(card));
+</script>
+
+</body>
+</html>
